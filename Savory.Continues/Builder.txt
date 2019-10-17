@@ -1,0 +1,91 @@
+﻿    <!--SonarScanner.MSBuild begin-->
+    <hudson.tasks.BatchFile>
+      <command>SonarScanner.MSBuild.exe begin /k:Test001</command>
+    </hudson.tasks.BatchFile>
+
+    <!--SonarScanner.MSBuild end-->
+    <hudson.tasks.BatchFile>
+      <command>SonarScanner.MSBuild.exe end</command>
+    </hudson.tasks.BatchFile>
+
+
+    <!--mstest-->
+    <hudson.tasks.BatchFile>
+      <command>@if exist UnitTestProject\bin\Debug\UnitTestProject_TestResult.trx (
+  echo Deteting old files
+  rm UnitTestProject\bin\Debug\UnitTestProject_TestResult.trx
+)
+
+mstest /noisolation /resultsfile:UnitTestProject\bin\Debug\UnitTestProject_TestResult.trx /testcontainer:UnitTestProject\bin\Debug\UnitTestProject.dll</command>
+    </hudson.tasks.BatchFile>
+
+
+    <hudson.plugins.mstest.MSTestPublisher plugin="mstest@0.23">
+      <testResultsFile>**/*.trx</testResultsFile>
+      <failOnError>true</failOnError>
+      <keepLongStdio>false</keepLongStdio>
+      <buildTime>0</buildTime>
+    </hudson.plugins.mstest.MSTestPublisher>
+
+
+===================创建站点======================================
+
+@echo off
+
+SET AppPoolName=RantaCssAppPool
+SET SiteName=RantaCss
+SET HostUrl=http://css.ranta.cn
+SET Port=80
+SET PhysicalPath=D:\WebRoot\RantaCss
+
+if not exist %PhysicalPath% mkdir %PhysicalPath%
+
+SET PATH=%PATH%;C:\Windows\SysWOW64;C:\Windows\System32\inetsrv
+
+rem 添加应用程序池
+appcmd add apppool /name:%AppPoolName% /managedRuntimeVersion:v4.0
+
+rem 添加站点
+appcmd add site /name:%SiteName% /bindings:%HostUrl%:%Port% /physicalPath:%PhysicalPath%
+
+rem 设置站点
+appcmd set site %SiteName% /[path='/'].applicationPool:%AppPoolName%
+
+pause
+
+rem 127.0.0.1 css.ranta.cn
+
+====================添加虚拟目录=====================================
+
+@echo off
+
+SET SiteName=RantaCss
+SET DeployVisualDirectory=deploy
+SET DeployVisualDirectoryPath=/%DeployVisualDirectory%
+SET DeployVisualDirectoryPhysicalPath=D:\WebRoot\RantaCss\%DeployVisualDirectory%
+
+if not exist %DeployVisualDirectoryPhysicalPath% mkdir %DeployVisualDirectoryPhysicalPath%
+
+SET PATH=%PATH%;C:\Windows\SysWOW64;C:\Windows\System32\inetsrv
+
+rem 添加虚拟目录
+appcmd add vdir /app.name:%SiteName%/ /path:%DeployVisualDirectoryPath% /physicalPath:%DeployVisualDirectoryPhysicalPath%
+
+pause
+
+
+
+
+=====================发布=========================================
+
+
+msbuild /t:package /p:configuration=release
+
+SET PATH=%PATH%;"C:\Program Files\IIS\Microsoft Web Deploy V3"
+
+msdeploy -verb:sync -source:contentPath=%CD%\obj\release\Package\PackageTmp -dest:contentPath=D:\WebRoot\RantaCss\deploy
+
+pause
+
+
+======================================================================================

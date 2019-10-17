@@ -1,0 +1,28 @@
+[
+  {
+    "outputFileName": "scripts/savory-continues.js",
+    "inputFiles": [
+      "scripts/_service.js",
+
+      "scripts/controller/WelcomeController.js",
+
+      "scripts/controller/ProjectListController.js",
+      "scripts/controller/ProjectItemController.js",
+      "scripts/controller/ProjectCreateController.js",
+      "scripts/controller/ProjectUpdateController.js",
+
+      "scripts/controller/BuildListController.js",
+      "scripts/controller/BuildItemController.js",
+      "scripts/controller/BuildCreateController.js",
+
+      "scripts/controller/ProcessListController.js",
+      "scripts/controller/ProcessCreateController.js",
+      "scripts/controller/ProcessItemController.js",
+      "scripts/controller/ProcessUpdateController.js",
+
+      "scripts/_route.js",
+      "scripts/_app.js"
+
+    ]
+  }
+]

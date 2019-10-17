@@ -1,0 +1,72 @@
+﻿<ol class="breadcrumb">
+    <li><a ui-sref="continues.welcome">持续集成</a></li>
+    <li><a ui-sref="continues.process.list">过程</a></li>
+    <li class="active">{{title}}</li>
+</ol>
+
+<blockquote ng-show="process==null">
+    404
+</blockquote>
+
+<div class="form-horizontal" ng-show="process!=null">
+
+    <div class="form-group">
+        <label class="control-label col-sm-1">名称</label>
+        <div class="col-sm-10">
+            <p class="form-control-static">{{process.name}}</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-1">描述</label>
+        <div class="col-sm-10">
+            <p class="form-control-static">{{process.description}}</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-1">参数</label>
+        <div class="col-sm-10">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>Key</th>
+                        <th>DefaultValue</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(x,param) in process.params">
+                        <td>{{x}}</td>
+                        <td>{{param.key}}</td>
+                        <td>{{param.defaultValue}}</td>
+                        <td>{{param.description}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-1">步骤</label>
+        <div class="col-sm-10">
+            <div class="panel panel-primary" ng-repeat="(x,step) in process.steps">
+                <div class="panel-heading">步骤 {{x}}</div>
+                <div class="panel-body">
+                    <p class="form-control-static">{{step}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-1">
+            <a ui-sref="continues.process.update({name:process.name})" class="btn btn-success">编辑</a>
+        </div>
+    </div>
+
+</div>
+

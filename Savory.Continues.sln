@@ -1,0 +1,25 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Savory.Continues", "Savory.Continues\Savory.Continues.csproj", "{8DF579B1-722C-47F9-8B8F-965FA1CDFF83}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8DF579B1-722C-47F9-8B8F-965FA1CDFF83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DF579B1-722C-47F9-8B8F-965FA1CDFF83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DF579B1-722C-47F9-8B8F-965FA1CDFF83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DF579B1-722C-47F9-8B8F-965FA1CDFF83}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9220A342-CC60-4BED-B19E-8F15FB0AD5A4}
+		LessCompiler = 8df579b1-722c-47f9-8b8f-965fa1cdff83
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,93 @@
+﻿<ol class="breadcrumb">
+    <li><a ui-sref="continues.welcome">管理后台</a></li>
+    <li><a ui-sref="continues.process.list">过程</a></li>
+    <li><a ui-sref="continues.process.item({name:process.name})">{{process.name}}</a></li>
+    <li class="active">编辑</li>
+</ol>
+
+<div class="form-horizontal">
+
+    <!--名称-->
+    <div class="form-group">
+        <label class="control-label col-sm-1">名称</label>
+        <div class="col-sm-4">
+            <p class="form-control-static">{{process.name}}</p>
+        </div>
+    </div>
+
+    <!--名称-->
+    <div class="form-group">
+        <label class="control-label col-sm-1">说明</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" ng-model="process.description" />
+        </div>
+    </div>
+
+    <!--参数-->
+    <div class="form-group">
+        <label class="control-label col-sm-1">参数</label>
+        <div class="col-sm-10">
+
+            <div ui-sortable ng-model="process.params">
+                <div class="panel panel-primary" ng-repeat="(x,param) in process.params">
+                    <div class="panel-heading">参数 {{x}}</div>
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-sm-3"><input type="text" ng-model="param.key" class="form-control" placeholder="Key" /></div>
+                            <div class="col-sm-3"><input type="text" ng-model="param.defaultValue" class="form-control" placeholder="Default Value" /></div>
+                            <div class="col-sm-3"><input type="text" ng-model="param.description" class="form-control" placeholder="Description" /></div>
+                            <div class="col-sm-3"><a class="btn btn-danger" ng-click="removeParam(param)">删除参数</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <a class="btn btn-success" ng-click="addParam()">增加参数</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--步骤-->
+    <div class="form-group">
+        <label class="col-sm-1 control-label">步骤</label>
+        <div class="col-sm-10">
+
+            <div ui-sortable ng-model="process.steps">
+                <div class="panel panel-primary" ng-repeat="(x,step) in process.steps">
+                    <div class="panel-heading">步骤 {{x}}</div>
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-sm-1">命令</div>
+                            <div class="col-sm-10">
+                                <textarea ng-model="step.cmd" class="form-control" />
+                            </div>
+                        </div>
+
+                        <hr />
+                        <div><a class="btn btn-danger" ng-click="removeStep(step)">删除此步骤</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <a class="btn btn-success" ng-click="addStep()">增加步骤</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-1">
+            <input type="button" class="btn btn-success" ng-click="confirmUpdate()" value="确认更新" />
+        </div>
+    </div>
+</div>

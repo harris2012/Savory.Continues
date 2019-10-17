@@ -1,0 +1,78 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<?xml version='1.0' encoding='utf-8'?>
+<project>
+  <actions />
+  <description>this is a test</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+<#
+    if (this.Params != null && this.Params.Count > 0)
+    {
+#>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+<#
+        foreach (var param in this.Params)
+        {
+#>
+        <hudson.model.StringParameterDefinition>
+          <name><#=param.Key#></name>
+          <description><#=param.Description#></description>
+          <defaultValue><#=param.DefaultValue??string.Empty#></defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+<#
+        }
+#>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+<#
+    }
+#>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.8.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>${Repository}</url>
+        <credentialsId><#=GlobalVariables.ScmCredentialsId#></credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/${Branch}</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list" />
+    <extensions />
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers />
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+
+<#
+    if(this.Cmds != null && this.Cmds.Count > 0)
+    {
+        foreach(var cmd in this.Cmds)
+        {
+#>
+    <hudson.tasks.BatchFile>
+      <command><#=cmd#></command>
+    </hudson.tasks.BatchFile>
+<#
+        }
+    }
+#>
+
+  </builders>
+  <publishers></publishers>
+</project>

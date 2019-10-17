@@ -1,0 +1,74 @@
+﻿<ol class="breadcrumb">
+    <li><a ui-sref="continues.welcome">持续集成</a></li>
+    <li><a ui-sref="continues.project.list">项目</a></li>
+    <li class="active">新建</li>
+</ol>
+
+<div class="form-horizontal">
+
+    <div class="form-group">
+        <label class="control-label col-sm-1">名称</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" ng-model="project.name" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-1">描述</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" ng-model="project.description" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-1">仓储</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" ng-model="project.repository" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-1">过程模版</label>
+        <div class="col-sm-10">
+            <div class="row">
+                <div class="col-sm-3" ng-repeat="process in processes">
+                    <div class="radio radio-inline icheck-success">
+                        <input type="radio" id="templateName_{{process.name}}" name="templateName" ng-value="process.name" ng-model="$parent.project.templateName" ng-click="selectProcess(process)" />
+                        <label for="templateName_{{process.name}}">{{process.name}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group" ng-show="project.params!=null&&project.params.length>0">
+        <label class="control-label col-sm-1">模版参数</label>
+        <div class="col-sm-10">
+            <div class="panel panel-info">
+                <div class="panel-heading">请填写参数</div>
+                <div class="panel-body">
+                    <div class="form-group" ng-repeat="param in project.params">
+                        <div class="row">
+                            <label class="control-label col-sm-2">{{param.key}}</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" ng-model="param.value" placeholder="{{param.defaultValue}}" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <p class="form-control-static">{{param.description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-1">
+            <a class="btn btn-success" ng-click="confirmCreate()">确认创建</a>
+        </div>
+    </div>
+
+</div>
